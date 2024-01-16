@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
-public interface CarStatusRepository extends CrudRepository<CarStatus, String> {
+public interface CarStatusRepository extends CrudRepository<CarStatus, Integer> {
 
 
 

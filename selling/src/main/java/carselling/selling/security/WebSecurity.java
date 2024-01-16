@@ -37,7 +37,11 @@ public class WebSecurity {
         http.csrf().disable()
             .cors().and()
                 .authorizeRequests()
-                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/login"), AntPathRequestMatcher.antMatcher(HttpMethod.PUT,"/signin")).permitAll()
+                .requestMatchers(
+                    AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/login")
+                    , AntPathRequestMatcher.antMatcher(HttpMethod.PUT,"/signin")
+                    ,AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/annonce")
+                    ).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import carselling.selling.entity.User;
 
 public interface UserRepository extends CrudRepository<User, String>{
-    @Query("select nextval('seq_user')")
+    @Query("select nextval('seq_users')")
     int getNextId();
     @Query(nativeQuery = true,value = "select * from users where email = :email")
     User getUsersByEmail(@Param(value = "email") String email);

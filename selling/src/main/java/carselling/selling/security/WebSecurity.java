@@ -3,6 +3,7 @@ package carselling.selling.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -36,7 +37,7 @@ public class WebSecurity {
         http.csrf().disable()
             .cors().and()
                 .authorizeRequests()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("car-selling-ws-prod-production.up.railway.app/login"), AntPathRequestMatcher.antMatcher("car-selling-ws-prod-production.up.railway.app/login")).permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/login"), AntPathRequestMatcher.antMatcher(HttpMethod.PUT,"/signin")).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

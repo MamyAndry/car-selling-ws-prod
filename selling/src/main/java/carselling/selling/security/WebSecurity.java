@@ -37,7 +37,7 @@ public class WebSecurity {
         http.csrf().disable()
             .cors().and()
                 .authorizeRequests()
-                .requestMatchers(AntPathRequestMatcher.antMatcher("car-selling-ws-prod-production.up.railway.app/login"), AntPathRequestMatcher.antMatcher("car-selling-ws-prod-production.up.railway.app/signin")).permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/login"), AntPathRequestMatcher.antMatcher(HttpMethod.PUT,"/signin")).permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import carselling.selling.entity.messagerie.Conversation;
 import carselling.selling.entity.messagerie.Message;
 import carselling.selling.repository.messagerie.MessageRepository;
 
+@Service
 public class MessageService {
     @Autowired
     MessageRepository repository;

@@ -79,5 +79,16 @@ public class ModelMotorController
 	}
 
 
+	@GetMapping("{debut}/{fin}")
+	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 }

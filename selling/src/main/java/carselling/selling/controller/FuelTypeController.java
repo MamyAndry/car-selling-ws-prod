@@ -3,7 +3,6 @@ package carselling.selling.controller;
 
 import carselling.selling.repository.FuelTypeRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.service.Service;
 import carselling.selling.entity.FuelType;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ public class FuelTypeController
 	public ResponseEntity<?> save(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
-			fuelType.setIdFuelType(Service.getPK("FUT", repository.getNextSequenceValue(), 7));
 			repository.save(fuelType);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
@@ -75,5 +73,16 @@ public class FuelTypeController
 		}
 	}
 
+	@GetMapping("{debut}/{fin}")
+	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 }

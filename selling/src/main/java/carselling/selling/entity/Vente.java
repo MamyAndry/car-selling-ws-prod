@@ -1,14 +1,21 @@
 package carselling.selling.entity;
 
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.sql.Date;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import carselling.selling.utils.IdGenerator;
 
 
 @Entity
@@ -18,16 +25,26 @@ public class Vente {
 	@Column(name = "id_annonce")
 	String idAnnonce;
 	@Column(name = "price_payed")
-	BigDecimal pricePayed;
+	Double pricePayed;
 	@Id
+		@GenericGenerator(name = "custom-id", type = IdGenerator.class,
+	parameters = {
+		@Parameter(name = "prefix", value = "SAL"),
+		@Parameter(name = "sequence", value = "seq_vente"),
+		@Parameter(name = "max_length", value = "7")
+	})
+	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
 	@Column(name = "id_vente")
 	String idVente;
 	@Column(name = "date_sell")
-	Timestamp dateSell;
-	@Column(name = "id_users")
-	String idUsers;
-
-
+	Date dateSell;
+	@ManyToOne
+	@JoinColumn(name = "id_Users")
+	User seller;
+	@Column
+	Integer status;
+	@Column(name = "date_validation")
+	Date dateValidation;
 
 
 	public Vente(){}
@@ -38,10 +55,14 @@ public class Vente {
 	public void setIdAnnonce(String idAnnonce){
 		this.idAnnonce = idAnnonce;
 	}
-	public BigDecimal getPricePayed(){
+	public Double getPricePayed(){
 		return this.pricePayed;
 	}
-	public void setPricePayed(BigDecimal pricePayed){
+	public void setPricePayed(Double pricePayed) throws Exception{
+		if (pricePayed < 0) {
+			throw new Exception("Price should not be negative");
+		}
+
 		this.pricePayed = pricePayed;
 	}
 	public String getIdVente(){
@@ -50,18 +71,36 @@ public class Vente {
 	public void setIdVente(String idVente){
 		this.idVente = idVente;
 	}
-	public Timestamp getDateSell(){
+	public Date getDateSell(){
 		return this.dateSell;
 	}
-	public void setDateSell(Timestamp dateSell){
+	public void setDateSell(Date dateSell){
 		this.dateSell = dateSell;
 	}
-	public String getIdUsers(){
-		return this.idUsers;
-	}
-	public void setIdUsers(String idUsers){
-		this.idUsers = idUsers;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+	public Date getDateValidation() {
+		return dateValidation;
 	}
 
+	public void setDateValidation(Date dateValidation) {
+		this.dateValidation = dateValidation;
+	}
+
+	public User getSeller() {
+		return seller;
+	}
+
+	public void setSeller(User seller) {
+		this.seller = seller;
+	}
+	
 
 }

@@ -14,7 +14,7 @@ public class CarStatus {
 
 	@Id
 	@Column(name = "id_car_status")
-	int idCarStatus;
+	Integer idCarStatus;
 	@Column(name = "name")
 	String name;
 

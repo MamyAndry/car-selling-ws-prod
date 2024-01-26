@@ -2,7 +2,7 @@ package carselling.selling.controller;
 
 
 import carselling.selling.repository.CarRepository;
-import carselling.selling.service.Service;
+import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Car;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,30 +12,72 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "car")
-public class CarController
- {
-
+public class CarController{
 	@Autowired
 	private CarRepository repository;
 
 
 	@PostMapping()
-	public ResponseEntity<Car> save(@RequestBody Car car){
-		car.setIdCar(Service.getPK("CAR", repository.getNextSequenceValue(), 8));
-	 	return ResponseEntity.ok(repository.save(car));
+	public ResponseEntity<?> save(@RequestBody Car car){	
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(car);
+			response.addData("data", car);
+			return  ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@PutMapping()
-	public ResponseEntity<Car> update(@RequestBody Car car){
-	 	return ResponseEntity.ok(repository.save(car));
+	public ResponseEntity<?> update(@RequestBody Car car){		
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(car);
+			response.addData("data", car);
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@DeleteMapping()
-	public void delete(@RequestBody Car car){
-	 	repository.delete(car);
+	public ResponseEntity<?> delete(@RequestBody Car car){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.delete(car);
+			response.addData("data", "Car Deleted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@GetMapping()
-	public ResponseEntity<Iterable<Car>> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<?> findAll(){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
+
+	@GetMapping("{id}")
+	public ResponseEntity<?> findById(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findById(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
+
+
 
 
 

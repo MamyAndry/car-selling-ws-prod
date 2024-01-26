@@ -24,7 +24,7 @@ public class LoginService implements UserDetailsService {
     @Autowired
     JwtUtils jwtUtils;
 
-    public ApiResponse login( User user) {
+    public ApiResponse login(User user) {
         ApiResponse response = new ApiResponse();
         String password = user.getPassword();
         try {

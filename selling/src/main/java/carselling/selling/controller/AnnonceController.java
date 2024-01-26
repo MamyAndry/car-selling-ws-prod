@@ -2,6 +2,7 @@ package carselling.selling.controller;
 
 
 import carselling.selling.repository.AnnonceRepository;
+import carselling.selling.response.ApiResponse;
 import carselling.selling.service.Service;
 import carselling.selling.entity.Annonce;
 import org.springframework.http.*;
@@ -20,21 +21,65 @@ public class AnnonceController
 
 
 	@PostMapping()
-	public ResponseEntity<Annonce> save(@RequestBody Annonce annonce){
-		annonce.setIdAnnonce(Service.getPK("ANN", repository.getNextSequenceValue(), 7));
-	 	return ResponseEntity.ok(repository.save(annonce));
+	public ResponseEntity<?> save(@RequestBody Annonce annonce){
+		ApiResponse response = new ApiResponse();
+		try{
+			annonce.setIdAnnonce(Service.getPK("ANN", repository.getNextSequenceValue(), 7));
+			repository.save(annonce);
+			response.addData("data", "Inserted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);	
+		}
 	}
 	@PutMapping()
-	public ResponseEntity<Annonce> update(@RequestBody Annonce annonce){
-	 	return ResponseEntity.ok(repository.save(annonce));
+	public ResponseEntity<?> update(@RequestBody Annonce annonce){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(annonce);
+			response.addData("data", "Updated succsessfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@DeleteMapping()
-	public void delete(@RequestBody Annonce annonce){
-	 	repository.delete(annonce);
+	public ResponseEntity<?> delete(@RequestBody Annonce annonce){
+		ApiResponse response = new ApiResponse();
+		try{
+			 repository.delete(annonce);
+			 response.addData("data", "Deleted successfully");
+			 return ResponseEntity.ok(response);
+		 }catch(Exception e){
+			 response.addError("error", e.getCause().getMessage());
+			 return ResponseEntity.ok(response);
+		 }
 	}
+
 	@GetMapping()
-	public ResponseEntity<Iterable<Annonce>> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<?> findAll(){
+		ApiResponse response = new ApiResponse();
+		try{
+			  response.addData("data", repository.findAll());
+			  return ResponseEntity.ok(response);
+		}catch(Exception e){
+			  response.addError("error", e.getCause().getMessage());
+			  return ResponseEntity.ok(response);
+		}
+	}
+
+	@GetMapping("{id}")
+	public ResponseEntity<?> findById(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findById(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 
 

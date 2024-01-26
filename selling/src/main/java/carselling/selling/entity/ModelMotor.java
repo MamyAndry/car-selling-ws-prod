@@ -1,7 +1,14 @@
 package carselling.selling.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 
 
@@ -10,8 +17,8 @@ import jakarta.persistence.*;
 public class ModelMotor {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_model_motor")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer idModelMotor;
 	@ManyToOne
 	@JoinColumn(name = "id_motorisation")
@@ -19,6 +26,9 @@ public class ModelMotor {
 	@ManyToOne
 	@JoinColumn(name = "id_model")
 	Model model;
+
+
+
 
 	public ModelMotor(){}
 
@@ -28,18 +38,15 @@ public class ModelMotor {
 	public void setIdModelMotor(Integer idModelMotor){
 		this.idModelMotor = idModelMotor;
 	}
-	public Motorisation getMotorisation(){
-		return this.motorisation;
+
+	public Model getModel() {
+		return model;
 	}
-	public void setMotorisation(Motorisation motorisation){
-		this.motorisation = motorisation;
-	}
-	public Model getModel(){
-		return this.model;
-	}
-	public void setModel(Model model){
+
+	public void setModel(Model model) {
 		this.model = model;
 	}
+	
 
 
 }

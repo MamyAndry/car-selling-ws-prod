@@ -1,18 +1,33 @@
 package carselling.selling.entity;
 
-import java.sql.Date;
+import java.util.Date;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import carselling.selling.exception.UserException;
+import carselling.selling.utils.IdGenerator;
 import carselling.selling.utils.Service;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
+    @GenericGenerator(name = "custom-id", type = IdGenerator.class,
+	parameters = {
+		@Parameter(name = "prefix", value = "CAT"),
+		@Parameter(name = "sequence", value = "seq_users"),
+		@Parameter(name = "max_length", value = "7")
+	})
+	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
     @Column(name = "id_users")
     String id;
     @Column
@@ -20,6 +35,7 @@ public class User {
     @Column(name = "first_name")
     String firstName;
     @Column(name = "birthdate")
+    @Temporal(TemporalType.DATE)
     Date birthdate;
     @Column
     String email;
@@ -29,6 +45,8 @@ public class User {
     Integer gender;
     @Column(name = "is_admin")
     boolean isAdmin;
+    @Column(name = "date_registration")
+    Date dateRegistration;
 
     public String getId() {
         return id;
@@ -96,5 +114,12 @@ public class User {
             throw new UserException("Please check your password");
         }
     }
+    public Date getDateRegistration() {
+        return dateRegistration;
+    }
+    public void setDateRegistration(Date dateRegistration) {
+        this.dateRegistration = dateRegistration;
+    }
+    
 
 }

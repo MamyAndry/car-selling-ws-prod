@@ -1,8 +1,14 @@
 package carselling.selling.entity;
 
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 
 
@@ -11,8 +17,8 @@ import jakarta.persistence.*;
 public class ModelFuelType {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_model_fuel_type")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer idModelFuelType;
 	@ManyToOne
 	@JoinColumn(name = "id_fuel_type")
@@ -32,16 +38,20 @@ public class ModelFuelType {
 	public void setIdModelFuelType(Integer idModelFuelType){
 		this.idModelFuelType = idModelFuelType;
 	}
-	public FuelType getFuelType(){
-		return this.fuelType;
+
+	public FuelType getFuelType() {
+		return fuelType;
 	}
-	public void setIdFuelType(FuelType fuelType){
+
+	public void setFuelType(FuelType fuelType) {
 		this.fuelType = fuelType;
 	}
-	public Model getModel(){
-		return this.model;
+
+	public Model getModel() {
+		return model;
 	}
-	public void setModel(Model model){
+
+	public void setModel(Model model) {
 		this.model = model;
 	}
 

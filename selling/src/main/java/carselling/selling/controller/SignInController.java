@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import carselling.selling.entity.User;
 import carselling.selling.repository.UserRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.utils.Service;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -22,7 +21,6 @@ public class SignInController {
 
     @PutMapping
     public @ResponseBody ApiResponse signin(@RequestBody User user){
-        user.setId(Service.getPK("USR", usersRepository.getNextId(), 7));
         ApiResponse response = new ApiResponse();
         try {
             user = usersRepository.save(user);

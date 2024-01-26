@@ -2,6 +2,7 @@ package carselling.selling.controller;
 
 
 import carselling.selling.repository.PhotoRepository;
+import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Photo;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +20,64 @@ public class PhotoController
 
 
 	@PostMapping()
-	public ResponseEntity<Photo> save(@RequestBody Photo photo){
-	 	return ResponseEntity.ok(repository.save(photo));
+	public ResponseEntity<?> save(@RequestBody Photo photo){
+		ApiResponse response = new ApiResponse();
+		try{	
+			repository.save(photo);
+			response.addData("data", "Inserted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@PutMapping()
-	public ResponseEntity<Photo> update(@RequestBody Photo photo){
-	 	return ResponseEntity.ok(repository.save(photo));
+	public ResponseEntity<?> update(@RequestBody Photo photo){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(photo);
+			response.addData("data", "Updated successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@DeleteMapping()
-	public void delete(@RequestBody Photo photo){
-	 	repository.delete(photo);
+	public ResponseEntity<?> delete(@RequestBody Photo photo){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.delete(photo);
+			response.addData("data", "Deleted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}	
 	}
 	@GetMapping()
-	public ResponseEntity<Iterable<Photo>> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<?> findAll(){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 
-
+	@GetMapping("{id}")
+	public ResponseEntity<?> findById(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findById(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 
 

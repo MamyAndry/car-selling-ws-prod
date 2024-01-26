@@ -1,31 +1,52 @@
 package carselling.selling.entity;
 
 
-import java.math.BigDecimal;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import java.sql.Timestamp;
 
-import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
-
+import carselling.selling.utils.IdGenerator;
 
 @Entity
 @Table(name = "annonce")
 public class Annonce {
 
 	@Id
+	@GenericGenerator(name = "custom-id", type = IdGenerator.class,
+	parameters = {
+		@Parameter(name = "prefix", value = "ANN"),
+		@Parameter(name = "sequence", value = "seq_annonce"),
+		@Parameter(name = "max_length", value = "7")
+	})
+	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
 	@Column(name = "id_annonce")
 	String idAnnonce;
-	@Column(name = "date_add")
+	@Column(name = "date_add", columnDefinition = "TIMESTAMP")
 	Timestamp dateAdd;
+	@Column(name = "date_validation")
+	Timestamp dateValidation;
 	@Column(name = "price")
-	BigDecimal price;
-	@ManyToOne
-	@JoinColumn(name = "id_car", referencedColumnName="id_car")
-	Car car;
+	Double price;
+	@Column(name = "description")
+	String description;
 	@Column(name = "status")
 	Integer status;
-	@Column
-	String description;
+	@ManyToOne
+	@JoinColumn(name = "id_location")
+	Location location;
+	@ManyToOne
+	@JoinColumn(name = "id_car")
+	Car car;
 
 
 	public Annonce(){}
@@ -42,17 +63,26 @@ public class Annonce {
 	public void setDateAdd(Timestamp dateAdd){
 		this.dateAdd = dateAdd;
 	}
-	public BigDecimal getPrice(){
+	public Timestamp getDateValidation(){
+		return this.dateValidation;
+	}
+	public void setDateValidation(Timestamp dateValidation){
+		this.dateValidation = dateValidation;
+	}
+	public Double getPrice(){
 		return this.price;
 	}
-	public void setPrice(BigDecimal price){
+	public void setPrice(Double price) throws Exception{
+		if (price < 0) {
+			throw new Exception("Price should not be negative");
+		}
 		this.price = price;
 	}
-	public Car getCar(){
-		return this.car;
+	public String getDescription(){
+		return this.description;
 	}
-	public void setCar(Car idCar){
-		this.car = idCar;
+	public void setDescription(String description){
+		this.description = description;
 	}
 	public Integer getStatus(){
 		return this.status;
@@ -60,11 +90,22 @@ public class Annonce {
 	public void setStatus(Integer status){
 		this.status = status;
 	}
-	public String getDexcription(){
-		return this.description;
+
+	public Location getLocation() {
+		return location;
 	}
-	public void setDescription(String description){
-		this.description = description;
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+	
 
 }

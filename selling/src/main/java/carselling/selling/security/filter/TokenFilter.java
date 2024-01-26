@@ -48,11 +48,16 @@ public class TokenFilter extends OncePerRequestFilter {
                 Authentication auth = new UsernamePasswordAuthenticationToken(id, "", new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch(RuntimeException e){
             errors.put("message", "Authentication Error");
             errors.put("details", e.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            mapper.writeValue(response.getWriter(), errors);
+        } catch (Exception e) {
+            errors.put("message", "Authentication Error");
+            errors.put("details", e.getMessage());
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             mapper.writeValue(response.getWriter(), errors);
         }

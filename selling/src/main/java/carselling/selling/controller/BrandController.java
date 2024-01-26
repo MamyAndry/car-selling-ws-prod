@@ -2,7 +2,7 @@ package carselling.selling.controller;
 
 
 import carselling.selling.repository.BrandRepository;
-import carselling.selling.service.Service;
+import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Brand;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,33 +12,71 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "brand")
-public class BrandController
- {
-
+public class BrandController{
 	@Autowired
 	private BrandRepository repository;
 
 
 	@PostMapping()
-	public ResponseEntity<Brand> save(@RequestBody Brand brand){
-		brand.setIdBrand(Service.getPK("BRD", repository.getNextSequenceValue(), 7));
-	 	return ResponseEntity.ok(repository.save(brand));
+	public ResponseEntity<?> save(@RequestBody Brand brand){
+		ApiResponse response = new ApiResponse();
+		try{
+			// brand.setIdBrand(Service.getPK("BRD", repository.getNextSequenceValue(), 7));
+			repository.save(brand);
+			response.addData("data", "Inserted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@PutMapping()
-	public ResponseEntity<Brand> update(@RequestBody Brand brand){
-	 	return ResponseEntity.ok(repository.save(brand));
+	public ResponseEntity<?> update(@RequestBody Brand brand){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(brand);
+			response.addData("data", "Updated successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	
 	}
 	@DeleteMapping()
-	public void delete(@RequestBody Brand brand){
-	 	repository.delete(brand);
+	public ResponseEntity<?> delete(@RequestBody Brand brand){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.delete(brand);
+			response.addData("data", "Deleted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@GetMapping()
-	public ResponseEntity<Iterable<Brand>> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<?> findAll(){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
-
-
-
-
+	
+	@GetMapping("{id}")
+	public ResponseEntity<?> findById(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findById(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 }

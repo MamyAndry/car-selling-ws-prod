@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtils {
     private static String secret = "This_is_secret";
-    private static long expiryDuration = 60 * 60;
+    private static long expiryDuration = 60 * 60 * 100;
 
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
@@ -25,7 +25,7 @@ public class JwtUtils {
     public String generateJwt(User user){
 
         long milliTime = System.currentTimeMillis();
-        long expiryTime = milliTime + expiryDuration * 1000;
+        long expiryTime = milliTime + expiryDuration * 10000000;
 
         Date issuedAt = new Date(milliTime);
         Date expiryAt = new Date(expiryTime);

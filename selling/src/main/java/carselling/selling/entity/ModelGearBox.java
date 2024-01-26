@@ -1,7 +1,14 @@
 package carselling.selling.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 
 
@@ -10,8 +17,8 @@ import jakarta.persistence.*;
 public class ModelGearBox {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_model_gear_box")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer idModelGearBox;
 	@ManyToOne
 	@JoinColumn(name = "id_gear_box")
@@ -25,23 +32,36 @@ public class ModelGearBox {
 
 	public ModelGearBox(){}
 
-	public GearBox getGearBox(){
-		return this.gearBox;
+	
+
+	public Model getModel() {
+		return model;
 	}
-	public void setGearBox(GearBox gearBox){
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public GearBox getGearBox() {
+		return gearBox;
+	}
+
+
+
+	public void setGearBox(GearBox gearBox) {
 		this.gearBox = gearBox;
 	}
-	public Integer getIdModelGearBox(){
-		return this.idModelGearBox;
+
+
+
+	public Integer getIdModelGearBox() {
+		return idModelGearBox;
 	}
-	public void setIdModelGearBox(Integer idModelGearBox){
+
+
+
+	public void setIdModelGearBox(Integer idModelGearBox) {
 		this.idModelGearBox = idModelGearBox;
-	}
-	public Model getModel(){
-		return this.model;
-	}
-	public void setModel(Model model){
-		this.model = model;
 	}
 
 

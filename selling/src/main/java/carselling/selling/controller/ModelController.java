@@ -2,7 +2,7 @@ package carselling.selling.controller;
 
 
 import carselling.selling.repository.ModelRepository;
-import carselling.selling.service.Service;
+import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Model;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +18,63 @@ public class ModelController{
 	private ModelRepository repository;
 
 	@PostMapping()
-	public ResponseEntity<Model> save(@RequestBody Model model){
-		model.setIdModel(Service.getPK("MDL", repository.getNextSequenceValue(), 7));
-	 	return ResponseEntity.ok(repository.save(model));
+	public ResponseEntity<?> save(@RequestBody Model model){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(model);
+			response.addData("data", "Inserted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@PutMapping()
-	public ResponseEntity<Model> update(@RequestBody Model model){
-	 	return ResponseEntity.ok(repository.save(model));
+	public ResponseEntity<?> update(@RequestBody Model model){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(model);
+			response.addData("data", "Updated successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 	@DeleteMapping()
-	public void delete(@RequestBody Model model){
-	 	repository.delete(model);
-	}
+	public ResponseEntity<?> delete(@RequestBody Model model){
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.delete(model);
+			response.addData("data", "Deleted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}	}
 	@GetMapping()
-	public ResponseEntity<Iterable<Model>> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
+	public ResponseEntity<?> findAll(){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
 
-
+	@GetMapping("{id}")
+	public ResponseEntity<?> findById(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findById(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 
 

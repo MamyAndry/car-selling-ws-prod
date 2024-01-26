@@ -21,7 +21,6 @@ public class BrandController{
 	public ResponseEntity<?> save(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
-			// brand.setIdBrand(Service.getPK("BRD", repository.getNextSequenceValue(), 7));
 			repository.save(brand);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
@@ -79,4 +78,16 @@ public class BrandController{
 		}
 	}
 
+
+	@GetMapping("{debut}/{fin}")
+	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 }

@@ -3,7 +3,6 @@ package carselling.selling.controller;
 
 import carselling.selling.repository.CategoryRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.service.Service;
 import carselling.selling.entity.Category;
 import org.springframework.http.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ public class CategoryController
 	public ResponseEntity<?> save(@RequestBody Category category){
 		ApiResponse response = new ApiResponse();
 		try{
-			category.setIdCategory(Service.getPK("CAT", repository.getNextSequenceValue(), 7));
 			repository.save(category);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
@@ -82,5 +80,16 @@ public class CategoryController
 	}
 
 
+	@GetMapping("{debut}/{fin}")
+	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 }

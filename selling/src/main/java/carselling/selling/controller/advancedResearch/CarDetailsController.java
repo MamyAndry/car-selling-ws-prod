@@ -61,10 +61,7 @@ public class CarDetailsController {
 
             List<Announcement> results = entityManager.createQuery(query).getResultList();
 
-            Map<String, Object> responseMap = new HashMap<>();
-            responseMap.put("message", "success");
-            responseMap.put("listAnnonce", results);
-            apiResponse.setData(responseMap);
+            apiResponse.addData("data", results);
             return ResponseEntity.ok(apiResponse);
         } catch (Exception e){
             apiResponse.addError("error", e.getCause().getMessage());

@@ -5,11 +5,13 @@ import carselling.selling.repository.FundRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Fund;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "fund")
 public class FundController
  {
@@ -31,6 +33,7 @@ public class FundController
 		}
 	}
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody Fund fund){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -43,6 +46,7 @@ public class FundController
 		}
 	}
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody Fund fund){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -80,7 +84,7 @@ public class FundController
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?> pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

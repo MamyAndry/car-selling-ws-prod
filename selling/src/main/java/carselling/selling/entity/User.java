@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -23,7 +25,7 @@ public class User {
     @Id
     @GenericGenerator(name = "custom-id", type = IdGenerator.class,
 	parameters = {
-		@Parameter(name = "prefix", value = "CAT"),
+		@Parameter(name = "prefix", value = "USR"),
 		@Parameter(name = "sequence", value = "seq_users"),
 		@Parameter(name = "max_length", value = "7")
 	})
@@ -34,6 +36,8 @@ public class User {
     String name;
     @Column(name = "first_name")
     String firstName;
+    @Column(name = "username")
+    String username;
     @Column(name = "birthdate")
     @Temporal(TemporalType.DATE)
     Date birthdate;
@@ -41,12 +45,13 @@ public class User {
     String email;
     @Column
     String password;
-    @Column
-    Integer gender;
     @Column(name = "is_admin")
-    boolean isAdmin;
+    boolean admin;
     @Column(name = "date_registration")
     Date dateRegistration;
+    @ManyToOne
+    @JoinColumn(name = "id_gender")
+    Gender gender;
 
     public String getId() {
         return id;
@@ -97,16 +102,17 @@ public class User {
         this.password = password;
     }
     public boolean isAdmin() {
-        return isAdmin;
+        return admin;
     }
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
-    public Integer getGender() {
-        return gender;
+
+    public String getUsername() {
+        return username;
     }
-    public void setGender(Integer gender) {
-        this.gender = gender;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void checkPassWord(String password2) throws UserException {
@@ -120,6 +126,4 @@ public class User {
     public void setDateRegistration(Date dateRegistration) {
         this.dateRegistration = dateRegistration;
     }
-    
-
 }

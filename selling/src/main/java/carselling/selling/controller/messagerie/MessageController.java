@@ -1,5 +1,7 @@
 package carselling.selling.controller.messagerie;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.ResponseEntity;
@@ -82,7 +84,7 @@ public class MessageController {
 	public ResponseEntity<?> getMessages(@PathVariable String id, @PathVariable String id2) {
 		ApiResponse response = new ApiResponse();
         try {
-			response.addData("data", repository.findMessagesByIdSenderOrIdReceiverOrderByDateTimeDesc(id, id2));
+			response.addData("data", service.getMessagesBetweenUsers(id, id2));
             return ResponseEntity.ok(response);
         } catch (Exception e) {
 			response.addError("error", e.getCause().getMessage());

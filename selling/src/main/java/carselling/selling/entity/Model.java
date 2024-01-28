@@ -1,6 +1,8 @@
 package carselling.selling.entity;
 
 
+import java.util.List;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -11,7 +13,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -19,7 +24,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "model")
 public class Model {
-
 	@Id
 	@GenericGenerator(name = "custom-id", type = IdGenerator.class,
 	parameters = {
@@ -30,6 +34,7 @@ public class Model {
 	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
 	@Column(name = "id_model")
 	String idModel;
+
 	@ManyToOne
 	@JoinColumn(name = "id_brand")
 	Brand brand;
@@ -38,6 +43,14 @@ public class Model {
 	Category category;
 	@Column(name = "name")
 	String name;
+
+	@ManyToMany
+	@JoinTable(
+		name = "model_gear_box",
+		joinColumns = @JoinColumn(name = "id_model"),
+		inverseJoinColumns = @JoinColumn(name = "id_gear_box")
+	)
+	List<GearBox> gearBoxes;
 
 
 
@@ -73,5 +86,11 @@ public class Model {
 		this.category = category;
 	}
 
+	public List<GearBox> getGearBoxes() {
+		return gearBoxes;
+	}
+	public void setGearBoxes(List<GearBox> gearBoxes) {
+		this.gearBoxes = gearBoxes;
+	}
 
 }

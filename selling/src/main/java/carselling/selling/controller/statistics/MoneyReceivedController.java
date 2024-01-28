@@ -2,6 +2,7 @@ package carselling.selling.controller.statistics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +18,6 @@ import carselling.selling.response.ApiResponse;
 public class MoneyReceivedController {
     @Autowired
 	private MoneyPerceivedRepository repository;
-
-    // @GetMapping("profit/{id}")
-	// public ResponseEntity<?> getProfitPerMonthPerYear(@PathVariable String id){
-	//  	return ResponseEntity.ok(repository.getProfitPerMonthPerYear(id));
-	// }
 
     @GetMapping("profit/{id}")
 	public ResponseEntity<?> getProfitPerYear(@PathVariable String id){
@@ -47,6 +43,7 @@ public class MoneyReceivedController {
 	}
 
     @GetMapping("funds")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getFundVariationPerMonthPerYear(){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -59,10 +56,11 @@ public class MoneyReceivedController {
 	}
 
     @GetMapping("fund")
-	public ResponseEntity<?> getFundVariationPerYears(){
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getFundVariationPerYear(){
 		ApiResponse response = new ApiResponse();
 		try{
-			response.addData("data", repository.getFundVariationPerYears());
+			response.addData("data", repository.getFundVariationPerYear());
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -71,6 +69,7 @@ public class MoneyReceivedController {
    }
 
 	@GetMapping("fund/{year}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> getFundVariationForYear(@PathVariable int year){
 		ApiResponse response = new ApiResponse();
 		try{

@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.sql.Date;
 
@@ -21,8 +23,9 @@ import carselling.selling.utils.IdGenerator;
 @Table(name = "fund")
 public class Fund {
 
-	@Column(name = "date_add")
-	Date dateAdd;
+	@Column(name = "date_addition")
+    @Temporal(TemporalType.DATE)
+	Date dateAddition;
 	@Column(name = "rising")
 	Double rising;
 	@Id	
@@ -36,19 +39,19 @@ public class Fund {
 	@Column(name = "id_fund")
 	String idFund;
 	@ManyToOne
-	@JoinColumn(name = "id_vente")
-	Vente vente;
+	@JoinColumn(name = "id_sale")
+	Sale sale;
 
 
 
 
 	public Fund(){}
 
-	public Date getDateAdd(){
-		return this.dateAdd;
+	public Date getDateAddition(){
+		return this.dateAddition;
 	}
-	public void setDateAdd(Date dateAdd){
-		this.dateAdd = dateAdd;
+	public void setDateAddition(Date dateAddition){
+		this.dateAddition = dateAddition;
 	}
 	public Double getRising(){
 		return this.rising;
@@ -66,12 +69,12 @@ public class Fund {
 		this.idFund = idFund;
 	}
 
-	public Vente getVente() {
-		return vente;
+	public Sale getSale() {
+		return sale;
 	}
 
-	public void setVente(Vente vente) {
-		this.vente = vente;
+	public void setSale(Sale sale) {
+		this.sale = sale;
 	}
 
 }

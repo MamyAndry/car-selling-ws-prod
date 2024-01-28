@@ -1,8 +1,8 @@
 package carselling.selling.entity.statistics;
 
 public interface ProfitPerMonthPerYear {
-    String getID_USERS_RESULT();
+    String getID_USERS();
     Double getSUM();
-    Integer getMONTH();
+    String getMONTH();
     Integer getYEAR();
 }

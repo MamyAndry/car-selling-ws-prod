@@ -1,9 +1,15 @@
 package carselling.selling.service.messagerie;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import carselling.selling.entity.messagerie.Conversation;
@@ -14,10 +20,12 @@ import carselling.selling.repository.messagerie.MessageRepository;
 public class MessageService {
     @Autowired
     MessageRepository repository;
-    
-    public List<Conversation> getConversations(String id){
-        ArrayList<Conversation> res = new ArrayList<>();
-        List<Message> messages = repository.findDistinctMessagesByIdSenderOrIdReceiver(id);
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    public Set<Conversation> getConversations(String id){
+        Set<Conversation> res = new HashSet<>();
+        List<Message> messages = repository.findByIdSenderOrIdReceiverOrderByDateTimeSendDesc(id, id);
         for (Message message : messages) {
             Conversation conversation = new Conversation();
             if (message.getIdReceiver().equals(id)) {
@@ -31,5 +39,12 @@ public class MessageService {
             }
         }
         return res;
+    }
+
+    public List<Message> getMessagesBetweenUsers(String userId1, String userId2) {
+        Query query = new Query(Criteria.where("idSender").in(Arrays.asList(userId1, userId2))
+            .orOperator(Criteria.where("idReceiver").in(Arrays.asList(userId1, userId2))));
+        query.with(Sort.by(Sort.Order.asc("dateTimeSend")));
+        return mongoTemplate.find(query, Message.class);
     }
 }

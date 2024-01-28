@@ -29,7 +29,6 @@ public class ModelFuelType {
 
 
 
-
 	public ModelFuelType(){}
 
 	public Integer getIdModelFuelType(){

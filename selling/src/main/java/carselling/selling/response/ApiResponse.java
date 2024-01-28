@@ -3,39 +3,42 @@ package carselling.selling.response;
 import java.util.HashMap;
 
 public class ApiResponse {
-    HashMap<String, Object> data;
-    HashMap<String, Object> error;
-    int status = 200;
+    Object data = null;
+    Object error = null;
 
-    public HashMap<String, Object> getData() {
+
+    
+
+    public void addData(String key, Object value) {
+        if(key.equals("data"))
+            this.setData(value);
+        else
+            this.setError(value);
+    }
+
+    public void addError(String key, Object value) {
+        if(key.equals("error"))
+            this.setError(value);
+    }
+    public ApiResponse(){}
+
+
+    public Object getData() {
         return data;
     }
-    public void setData(HashMap<String, Object> data) {
+
+
+    public void setData(Object data) {
         this.data = data;
     }
 
-    public void addData(String key, Object value) {
-        this.data.put(key, value);
-    }
 
-    public HashMap<String, Object> getError() {
+    public Object getError() {
         return error;
     }
-    public void setError(HashMap<String, Object> error) {
-        this.error = error;
-    }
-    public void addError(String key, Object value) {
-        this.error.put(key, value);
-    }
 
-    public ApiResponse(){
-        data = new HashMap<>();
-        error = new HashMap<>();
-    }
-    public int getStatus() {
-        return status;
-    }
-    public void setStatus(int status) {
-        this.status = status;
+
+    public void setError(Object error) {
+        this.error = error;
     }
 }

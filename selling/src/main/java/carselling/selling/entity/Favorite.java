@@ -17,12 +17,12 @@ import carselling.selling.utils.IdGenerator;
 
 
 @Entity
-@Table(name = "favoris")
-public class Favoris {
+@Table(name = "favorite")
+public class Favorite {
 
 	@ManyToOne
-	@JoinColumn(name = "id_annonce")
-	Annonce annonce;
+	@JoinColumn(name = "id_announcement")
+	Announcement announcement;
 	@ManyToOne
 	@JoinColumn(name = "id_users")
 	User user;
@@ -30,31 +30,31 @@ public class Favoris {
 	@GenericGenerator(name = "custom-id", type = IdGenerator.class,
 	parameters = {
 		@Parameter(name = "prefix", value = "FAV"),
-		@Parameter(name = "sequence", value = "seq_favoris"),
+		@Parameter(name = "sequence", value = "seq_favorite"),
 		@Parameter(name = "max_length", value = "7")
 	})
 	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
-	@Column(name = "id_favoris")
-	String idFavoris;
+	@Column(name = "id_favorite")
+	String idFavorite;
 
 
 
 
-	public Favoris(){}
+	public Favorite(){}
 
-	public String getIdFavoris(){
-		return this.idFavoris;
+	public String getIdFavorite(){
+		return this.idFavorite;
 	}
-	public void setIdFavoris(String idFavoris){
-		this.idFavoris = idFavoris;
-	}
-
-	public Annonce getAnnonce() {
-		return annonce;
+	public void setIdFavorite(String idFavorite){
+		this.idFavorite = idFavorite;
 	}
 
-	public void setAnnonce(Annonce annonce) {
-		this.annonce = annonce;
+	public Announcement getAnnouncement() {
+		return announcement;
+	}
+
+	public void setAnnouncement(Announcement announcement) {
+		this.announcement = announcement;
 	}
 
 	public User getUser() {

@@ -5,6 +5,7 @@ import carselling.selling.repository.GearBoxRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.GearBox;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class GearBoxController
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody GearBox gearBox){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -31,7 +33,9 @@ public class GearBoxController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody GearBox gearBox){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -43,7 +47,9 @@ public class GearBoxController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody GearBox gearBox){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -80,7 +86,7 @@ public class GearBoxController
 	}
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

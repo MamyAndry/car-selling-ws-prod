@@ -19,8 +19,7 @@ import org.springframework.beans.factory.annotation.Configurable;
  *
  * @author sarobidy
  */
-public class IdGenerator implements IdentifierGenerator, Configurable {
-          
+public class IdGenerator implements IdentifierGenerator, Configurable {     
     String prefix;
     String sequence;
     Integer max_length;
@@ -102,8 +101,5 @@ public class IdGenerator implements IdentifierGenerator, Configurable {
     @Override
     public Class<? extends Annotation> annotationType() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-          
-          
-          
+    }         
 }

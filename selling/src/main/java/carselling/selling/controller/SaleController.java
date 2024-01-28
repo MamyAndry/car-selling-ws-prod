@@ -1,44 +1,46 @@
 package carselling.selling.controller;
 
 
-import carselling.selling.repository.AnnonceRepository;
+import carselling.selling.repository.SaleRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.entity.Annonce;
+import carselling.selling.service.sale.SaleService;
+import carselling.selling.entity.Sale;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(path = "annonce")
-public class AnnonceController
+@RequestMapping(path = "sale")
+public class SaleController
  {
 
 	@Autowired
-	private AnnonceRepository repository;
-
+	private SaleRepository repository;
+	@Autowired 
+	private SaleService saleService;
 
 	@PostMapping()
-	public ResponseEntity<?> save(@RequestBody Annonce annonce){
+	public ResponseEntity<?> save(@RequestBody Sale sale){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(annonce);
+			repository.save(sale);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
-			return ResponseEntity.ok(response);	
+			return ResponseEntity.ok(response);
 		}
 	}
 	@PutMapping()
-	public ResponseEntity<?> update(@RequestBody Annonce annonce){
+	public ResponseEntity<?> update(@RequestBody Sale sale){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(annonce);
-			response.addData("data", "Updated succsessfully");
+			repository.save(sale);
+			response.addData("data", "Updated successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -46,30 +48,39 @@ public class AnnonceController
 		}
 	}
 	@DeleteMapping()
-	public ResponseEntity<?> delete(@RequestBody Annonce annonce){
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> delete(@RequestBody Sale sale){
 		ApiResponse response = new ApiResponse();
 		try{
-			 repository.delete(annonce);
-			 response.addData("data", "Deleted successfully");
-			 return ResponseEntity.ok(response);
-		 }catch(Exception e){
-			 response.addError("error", e.getCause().getMessage());
-			 return ResponseEntity.ok(response);
-		 }
+			repository.delete(sale);
+			response.addData("data", "Deleted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
-
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
 		ApiResponse response = new ApiResponse();
 		try{
-			  response.addData("data", repository.findAll());
-			  return ResponseEntity.ok(response);
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
 		}catch(Exception e){
-			  response.addError("error", e.getCause().getMessage());
-			  return ResponseEntity.ok(response);
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
 		}
 	}
 
+	@PostMapping("validateSell")
+	public ResponseEntity<?> sellCar(@RequestBody Sale sale) {
+		try {
+			return saleService.sellCar(sale);
+		} catch (Exception e) {
+			return ResponseEntity.ok(e.getMessage());
+		}
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable String id){
 		ApiResponse response = new ApiResponse();
@@ -82,8 +93,9 @@ public class AnnonceController
 		}
 	}
 
+
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  paginer(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));
@@ -93,5 +105,4 @@ public class AnnonceController
 			return ResponseEntity.ok(response);
 		}
 	}
-	
 }

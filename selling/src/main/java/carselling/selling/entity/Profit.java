@@ -22,8 +22,8 @@ import carselling.selling.utils.IdGenerator;
 @Table(name = "profit")
 public class Profit {
 
-	@Column(name = "date_add")
-	Date dateAdd;
+	@Column(name = "date_addition")
+	Date dateAddition;
 	@Column(name = "rising")
 	Double rising;
 	@Id 
@@ -45,11 +45,11 @@ public class Profit {
 
 	public Profit(){}
 
-	public Date getDateAdd(){
-		return this.dateAdd;
+	public Date getDateAddition(){
+		return this.dateAddition;
 	}
-	public void setDateAdd(Date dateAdd){
-		this.dateAdd = dateAdd;
+	public void setDateAddition(Date dateAddition){
+		this.dateAddition = dateAddition;
 	}
 	public Double getRising(){
 		return this.rising;

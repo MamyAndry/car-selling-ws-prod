@@ -1,33 +1,29 @@
 package carselling.selling.controller;
 
 
-import carselling.selling.repository.VenteRepository;
+import carselling.selling.repository.FavoriteRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.service.vente.VenteService;
-import carselling.selling.entity.Vente;
+import carselling.selling.entity.Favorite;
 import org.springframework.http.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(path = "vente")
-public class VenteController
+@RequestMapping(path = "favorite")
+public class FavoriteController
  {
 
 	@Autowired
-	private VenteRepository repository;
-	@Autowired 
-	private VenteService venteService;
+	private FavoriteRepository repository;
+
 
 	@PostMapping()
-	public ResponseEntity<?> save(@RequestBody Vente vente){
+	public ResponseEntity<?> save(@RequestBody Favorite favorite){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(vente);
+			repository.save(favorite);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
@@ -36,10 +32,10 @@ public class VenteController
 		}
 	}
 	@PutMapping()
-	public ResponseEntity<?> update(@RequestBody Vente vente){
+	public ResponseEntity<?> update(@RequestBody Favorite favorite){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(vente);
+			repository.save(favorite);
 			response.addData("data", "Updated successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
@@ -48,10 +44,10 @@ public class VenteController
 		}
 	}
 	@DeleteMapping()
-	public ResponseEntity<?> delete(@RequestBody Vente vente){
+	public ResponseEntity<?> delete(@RequestBody Favorite favorite){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.delete(vente);
+			repository.delete(favorite);
 			response.addData("data", "Deleted successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
@@ -71,15 +67,6 @@ public class VenteController
 		}
 	}
 
-	@PostMapping("validateSell")
-	public ResponseEntity<?> sellCar(@RequestBody Vente vente) {
-		try {
-			return venteService.sellCar(vente);
-		} catch (Exception e) {
-			return ResponseEntity.ok(e.getMessage());
-		}
-	}
-	
 	@GetMapping("{id}")
 	public ResponseEntity<?> findById(@PathVariable String id){
 		ApiResponse response = new ApiResponse();
@@ -94,7 +81,7 @@ public class VenteController
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));
@@ -104,4 +91,6 @@ public class VenteController
 			return ResponseEntity.ok(response);
 		}
 	}
+
+
 }

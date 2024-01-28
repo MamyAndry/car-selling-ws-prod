@@ -5,6 +5,7 @@ import carselling.selling.repository.ModelMotorRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.ModelMotor;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class ModelMotorController
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody ModelMotor modelMotor){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -31,7 +33,9 @@ public class ModelMotorController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody ModelMotor modelMotor){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -43,7 +47,9 @@ public class ModelMotorController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody ModelMotor modelMotor){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -53,7 +59,9 @@ public class ModelMotorController
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
 			return ResponseEntity.ok(response);
-		}	}
+		}	
+	}
+	
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
 		ApiResponse response = new ApiResponse();
@@ -80,7 +88,7 @@ public class ModelMotorController
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

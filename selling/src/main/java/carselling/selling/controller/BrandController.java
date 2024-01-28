@@ -5,6 +5,7 @@ import carselling.selling.repository.BrandRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Brand;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class BrandController{
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -29,7 +31,9 @@ public class BrandController{
 			return ResponseEntity.ok(response);
 		}
 	}
+	
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -43,6 +47,7 @@ public class BrandController{
 	
 	}
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -80,7 +85,7 @@ public class BrandController{
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

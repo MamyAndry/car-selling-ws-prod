@@ -12,6 +12,7 @@ import java.util.Date;
 
 import javax.naming.AuthenticationException;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +23,7 @@ public class JwtUtils {
     private final String TOKEN_HEADER = "Authorization";
     private final String TOKEN_PREFIX = "Bearer ";
 
-    public String generateJwt(User user){
+    public String generateJwt(UserDetails user){
 
         long milliTime = System.currentTimeMillis();
         long expiryTime = milliTime + expiryDuration * 10000000;
@@ -32,14 +33,14 @@ public class JwtUtils {
 
         // claims
         Claims claims = Jwts.claims()
-                .setIssuer(user.getId())
+                .setIssuer(user.getUsername())
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiryAt);
 
         // optional claims
-        claims.put("email", user.getEmail());
-        claims.put("admin", user.isAdmin());
-
+        claims.put("email", user.getUsername());
+        claims.put("admin", user.getPassword());
+        claims.put("role", user.getAuthorities().iterator().next().getAuthority());
         // generate jwt using claims
         return Jwts.builder()
                 .setClaims(claims)

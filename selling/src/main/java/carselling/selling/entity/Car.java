@@ -36,7 +36,7 @@ public class Car {
 	@Column(name = "kilometrage")
 	Double kilometrage;
 	@ManyToOne
-	@JoinColumn(name = "id_car-status")
+	@JoinColumn(name = "id_car_status")
 	CarStatus carStatus;
 	@ManyToOne
 	@JoinColumn(name = "id_users")

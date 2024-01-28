@@ -5,6 +5,7 @@ import carselling.selling.repository.ModelRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.Model;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class ModelController{
 	private ModelRepository repository;
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody Model model){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -29,7 +31,9 @@ public class ModelController{
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody Model model){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -41,7 +45,9 @@ public class ModelController{
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody Model model){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -78,7 +84,7 @@ public class ModelController{
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

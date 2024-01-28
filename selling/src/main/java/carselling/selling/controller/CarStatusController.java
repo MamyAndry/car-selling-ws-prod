@@ -5,6 +5,7 @@ import carselling.selling.repository.CarStatusRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.CarStatus;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class CarStatusController
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody CarStatus carStatus){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -31,7 +33,9 @@ public class CarStatusController
 			return ResponseEntity.ok(response);
 		 }
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody CarStatus carStatus){
 		 ApiResponse response = new ApiResponse();
 		 try{
@@ -43,7 +47,9 @@ public class CarStatusController
 			return ResponseEntity.ok(response);
 		 }
 	}
+
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody CarStatus carStatus){
     ApiResponse response = new ApiResponse();
     try{

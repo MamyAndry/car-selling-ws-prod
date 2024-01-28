@@ -1,7 +1,7 @@
 package carselling.selling.entity.statistics;
 
 public interface BrandSoldPerYear {
-    String getBRAND_RESULT();
+    String getBRAND();
     Integer getYEAR();
     Integer getSUM();
 }

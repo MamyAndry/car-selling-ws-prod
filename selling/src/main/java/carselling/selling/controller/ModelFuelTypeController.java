@@ -5,6 +5,7 @@ import carselling.selling.repository.ModelFuelTypeRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.ModelFuelType;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,21 @@ public class ModelFuelTypeController
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody ModelFuelType modelFuelType){
-	 	return ResponseEntity.ok(repository.save(modelFuelType));
+		ApiResponse response = new ApiResponse();
+		try{
+			repository.save(modelFuelType);
+			response.addData("data", "Inserted successfully");
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody ModelFuelType modelFuelType){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -36,6 +48,7 @@ public class ModelFuelTypeController
 		}
 	}
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody ModelFuelType modelFuelType){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -72,7 +85,7 @@ public class ModelFuelTypeController
 
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

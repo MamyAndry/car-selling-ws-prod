@@ -5,6 +5,7 @@ import carselling.selling.repository.FuelTypeRepository;
 import carselling.selling.response.ApiResponse;
 import carselling.selling.entity.FuelType;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class FuelTypeController
 
 
 	@PostMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> save(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -31,7 +33,9 @@ public class FuelTypeController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@PutMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> update(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -44,6 +48,7 @@ public class FuelTypeController
 		}
 	}
 	@DeleteMapping()
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
@@ -57,8 +62,14 @@ public class FuelTypeController
 	}
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
-	 	return ResponseEntity.ok(repository.findAll());
-	}
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findAll());
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}	}
 
 
 	@GetMapping("{id}")
@@ -74,7 +85,7 @@ public class FuelTypeController
 	}
 
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));

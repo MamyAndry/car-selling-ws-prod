@@ -32,9 +32,6 @@ public class Location {
 	@Column(name = "id_location")
 	String idLocation;
 
-
-
-
 	public Location(){}
 
 	public String getName(){

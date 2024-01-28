@@ -19,27 +19,27 @@ import carselling.selling.utils.IdGenerator;
 
 
 @Entity
-@Table(name = "vente")
-public class Vente {
+@Table(name = "sale")
+public class Sale {
 
-	@Column(name = "id_annonce")
-	String idAnnonce;
+	@Column(name = "id_announcement")
+	String idAnnouncement;
 	@Column(name = "price_payed")
 	Double pricePayed;
 	@Id
 		@GenericGenerator(name = "custom-id", type = IdGenerator.class,
 	parameters = {
 		@Parameter(name = "prefix", value = "SAL"),
-		@Parameter(name = "sequence", value = "seq_vente"),
+		@Parameter(name = "sequence", value = "seq_sale"),
 		@Parameter(name = "max_length", value = "7")
 	})
 	@GeneratedValue(generator = "custom-id", strategy = GenerationType.IDENTITY)
-	@Column(name = "id_vente")
-	String idVente;
-	@Column(name = "date_sell")
-	Date dateSell;
+	@Column(name = "id_sale")
+	String idSale;
+	@Column(name = "date_sale")
+	Date dateSale;
 	@ManyToOne
-	@JoinColumn(name = "id_Users")
+	@JoinColumn(name = "id_seller")
 	User seller;
 	@Column
 	Integer status;
@@ -47,13 +47,13 @@ public class Vente {
 	Date dateValidation;
 
 
-	public Vente(){}
+	public Sale(){}
 
-	public String getIdAnnonce(){
-		return this.idAnnonce;
+	public String getIdAnnouncement(){
+		return this.idAnnouncement;
 	}
-	public void setIdAnnonce(String idAnnonce){
-		this.idAnnonce = idAnnonce;
+	public void setIdAnnouncement(String idAnnouncement){
+		this.idAnnouncement = idAnnouncement;
 	}
 	public Double getPricePayed(){
 		return this.pricePayed;
@@ -65,17 +65,17 @@ public class Vente {
 
 		this.pricePayed = pricePayed;
 	}
-	public String getIdVente(){
-		return this.idVente;
+	public String getIdSale(){
+		return this.idSale;
 	}
-	public void setIdVente(String idVente){
-		this.idVente = idVente;
+	public void setIdSale(String idsale){
+		this.idSale = idsale;
 	}
-	public Date getDateSell(){
-		return this.dateSell;
+	public Date getDateSale(){
+		return this.dateSale;
 	}
-	public void setDateSell(Date dateSell){
-		this.dateSell = dateSell;
+	public void setDateSale(Date dateSale){
+		this.dateSale = dateSale;
 	}
 
     public Integer getStatus() {

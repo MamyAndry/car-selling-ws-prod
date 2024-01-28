@@ -28,21 +28,27 @@ public class LoginController {
     @PostMapping
     public @ResponseBody  ResponseEntity<ApiResponse> login(@RequestBody User user) {
         ApiResponse response = loginService.login(user);
-        return ResponseEntity.status(response.getStatus()).body(response);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public @ResponseBody ResponseEntity<ApiResponse> test(@RequestHeader String authorization) {
-        ApiResponse response = new ApiResponse();
-        try {
-            response.addData("token", jwtUtils.verify(jwtUtils.parseToken(authorization)));
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            response.addError("error", e.getMessage());
-            response.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
-            return ResponseEntity.status(response.getStatus()).body(response);
-        }
-        return ResponseEntity.ok().body(response);
+    @PostMapping("/admin")
+    public @ResponseBody  ResponseEntity<ApiResponse> loginAdmin(@RequestBody User user) {
+        ApiResponse response = loginService.loginAdmin(user);
+        return ResponseEntity.ok(response);
     }
+
+    // @GetMapping
+    // public @ResponseBody ResponseEntity<ApiResponse> test(@RequestHeader String authorization) {
+    //     ApiResponse response = new ApiResponse();
+    //     try {
+    //         response.addData("token", jwtUtils.verify(jwtUtils.parseToken(authorization)));
+    //     } catch (Exception e) {
+    //         // TODO Auto-generated catch block
+    //         response.addError("error", e.getMessage());
+    //         response.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
+    //         return ResponseEntity.status(response.getStatus()).body(response);
+    //     }
+    //     return ResponseEntity.ok().body(response);
+    // }
 
 }

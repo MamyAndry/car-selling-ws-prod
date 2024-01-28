@@ -1,29 +1,33 @@
 package carselling.selling.controller;
 
 
-import carselling.selling.repository.FavorisRepository;
+import carselling.selling.repository.AnnouncementRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.entity.Favoris;
+import carselling.selling.entity.Announcement;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+
 
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(path = "favoris")
-public class FavorisController
+@RequestMapping(path = "announcement")
+public class AnnouncementController
  {
-
 	@Autowired
-	private FavorisRepository repository;
+	private AnnouncementRepository repository;
 
 
 	@PostMapping()
-	public ResponseEntity<?> save(@RequestBody Favoris favoris){
+	public ResponseEntity<?> save(@RequestBody Announcement announcement){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(favoris);
+			repository.save(announcement);
 			response.addData("data", "Inserted successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
@@ -32,11 +36,11 @@ public class FavorisController
 		}
 	}
 	@PutMapping()
-	public ResponseEntity<?> update(@RequestBody Favoris favoris){
+	public ResponseEntity<?> update(@RequestBody Announcement announcement){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(favoris);
-			response.addData("data", "Updated successfully");
+			repository.save(announcement);
+			response.addData("data", "Updated succsessfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -44,10 +48,10 @@ public class FavorisController
 		}
 	}
 	@DeleteMapping()
-	public ResponseEntity<?> delete(@RequestBody Favoris favoris){
+	public ResponseEntity<?> delete(@RequestBody Announcement announcement){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.delete(favoris);
+			repository.delete(announcement);
 			response.addData("data", "Deleted successfully");
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
@@ -55,15 +59,16 @@ public class FavorisController
 			return ResponseEntity.ok(response);
 		}
 	}
+
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
 		ApiResponse response = new ApiResponse();
 		try{
-			response.addData("data", repository.findAll());
-			return ResponseEntity.ok(response);
+			  response.addData("data", repository.findAll());
+			  return ResponseEntity.ok(response);
 		}catch(Exception e){
-			response.addError("error", e.getCause().getMessage());
-			return ResponseEntity.ok(response);
+			  response.addError("error", e.getCause().getMessage());
+			  return ResponseEntity.ok(response);
 		}
 	}
 
@@ -80,8 +85,20 @@ public class FavorisController
 	}
 
 
+	@GetMapping("status/{status}")
+	public ResponseEntity<?> findNotValidated(@PathVariable int status){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findByStatus(status));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
+
 	@GetMapping("{debut}/{fin}")
-	public ResponseEntity<?>  getMethodName(@PathVariable int debut, @PathVariable int fin) {
+	public ResponseEntity<?>  pagination(@PathVariable int debut, @PathVariable int fin) {
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));
@@ -91,6 +108,5 @@ public class FavorisController
 			return ResponseEntity.ok(response);
 		}
 	}
-
 
 }

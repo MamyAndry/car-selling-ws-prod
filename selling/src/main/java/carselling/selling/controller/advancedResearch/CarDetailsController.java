@@ -64,6 +64,7 @@ public class CarDetailsController {
             apiResponse.addData("data", results);
             return ResponseEntity.ok(apiResponse);
         } catch (Exception e){
+            e.printStackTrace();
             apiResponse.addError("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
         }

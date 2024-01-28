@@ -2,6 +2,7 @@ package carselling.selling.controller.advancedResearch;
 
 import carselling.selling.entity.Announcement;
 import carselling.selling.entity.advancedResearch.CarDetails;
+import carselling.selling.response.ApiResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -32,7 +33,8 @@ public class CarDetailsController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> advancedResearch(@RequestBody CarDetails carDetails){
+    public ResponseEntity<ApiResponse> advancedResearch(@RequestBody CarDetails carDetails){
+        ApiResponse apiResponse = new ApiResponse();
         try{
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Announcement> query = builder.createQuery(Announcement.class);
@@ -62,10 +64,11 @@ public class CarDetailsController {
             Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("message", "success");
             responseMap.put("listAnnonce", results);
-
-            return new ResponseEntity<>(responseMap, HttpStatus.OK);
+            apiResponse.setData(responseMap);
+            return ResponseEntity.ok(apiResponse);
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            apiResponse.addError("error", e.getCause().getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
         }
     }
 

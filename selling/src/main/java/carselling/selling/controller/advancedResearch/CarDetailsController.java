@@ -23,6 +23,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "advancedReseach")
 public class CarDetailsController {
+    @Autowired
     private EntityManager entityManager;
     public EntityManager getEntityManager() {
         return entityManager;

@@ -1,5 +1,7 @@
 package carselling.selling.controller.messagerie;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ public class MessageController {
 	public ResponseEntity<?> save(@RequestBody Message message){
 		ApiResponse response = new ApiResponse();
         try {
+			message.setDateTimeSend(Date.valueOf(LocalDate.now()));
 			repository.save(message);
 			response.addData("data", "Inserted successfully");
             return ResponseEntity.ok(response);

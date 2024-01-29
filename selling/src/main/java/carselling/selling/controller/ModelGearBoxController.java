@@ -26,8 +26,7 @@ public class ModelGearBoxController
 	public ResponseEntity<?> save(@RequestBody ModelGearBox modelGearBox){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(modelGearBox);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(modelGearBox));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class ModelGearBoxController
 	public ResponseEntity<?> update(@RequestBody ModelGearBox modelGearBox){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(modelGearBox);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(modelGearBox));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

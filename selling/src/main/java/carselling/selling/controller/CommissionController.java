@@ -24,8 +24,7 @@ public class CommissionController
 	public ResponseEntity<?> save(@RequestBody Commission commission){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(commission);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(commission));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -37,8 +36,7 @@ public class CommissionController
 	public ResponseEntity<?> update(@RequestBody Commission commission){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(commission);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(commission));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

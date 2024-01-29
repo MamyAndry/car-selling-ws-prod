@@ -24,8 +24,7 @@ public class FundController
 	public ResponseEntity<?> save(@RequestBody Fund fund){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(fund);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(fund));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -37,8 +36,7 @@ public class FundController
 	public ResponseEntity<?> update(@RequestBody Fund fund){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(fund);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(fund));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

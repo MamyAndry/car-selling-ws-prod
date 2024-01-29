@@ -23,8 +23,7 @@ public class ModelController{
 	public ResponseEntity<?> save(@RequestBody Model model){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(model);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(model));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -37,8 +36,7 @@ public class ModelController{
 	public ResponseEntity<?> update(@RequestBody Model model){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(model);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(model));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

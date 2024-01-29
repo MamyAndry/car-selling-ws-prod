@@ -54,6 +54,7 @@ public class CarDetailsController {
             annonce.searchByMotor(carDetails.getIdMotor(), predicates, builder, root);
             annonce.searchByPrice(carDetails.getMin_price(), carDetails.getMax_price(), predicates, builder, root);
             annonce.searchByLocation(carDetails.getIdLocation(), predicates, builder, root);
+            annonce.searchByOrigin(carDetails.getIdOrigin(), predicates, builder, root);
 
             query.where(predicates.toArray(new Predicate[0]));
 

@@ -25,8 +25,7 @@ public class FuelTypeController
 	public ResponseEntity<?> save(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(fuelType);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(fuelType));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class FuelTypeController
 	public ResponseEntity<?> update(@RequestBody FuelType fuelType){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(fuelType);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(fuelType));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

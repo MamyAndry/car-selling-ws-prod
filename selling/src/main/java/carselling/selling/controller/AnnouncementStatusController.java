@@ -24,8 +24,7 @@ public class AnnouncementStatusController
 	public ResponseEntity<?> save(@RequestBody AnnouncementStatus announcementStatus){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(announcementStatus);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(announcementStatus));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -38,8 +37,7 @@ public class AnnouncementStatusController
 	public ResponseEntity<?> update(@RequestBody AnnouncementStatus announcementStatus){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(announcementStatus);
-			response.addData("data", "Updated succsessfully");
+			response.addData("data", repository.save(announcementStatus));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

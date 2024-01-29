@@ -21,8 +21,7 @@ public class CarController{
 	public ResponseEntity<?> save(@RequestBody Car car){	
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(car);
-			response.addData("data", car);
+			response.addData("data", repository.save(car));
 			return  ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -33,8 +32,7 @@ public class CarController{
 	public ResponseEntity<?> update(@RequestBody Car car){		
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(car);
-			response.addData("data", car);
+			response.addData("data", repository.save(car));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

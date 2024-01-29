@@ -24,8 +24,7 @@ public class ProfitController
 	public ResponseEntity<?> save(@RequestBody Profit profit){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(profit);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(profit));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -36,8 +35,7 @@ public class ProfitController
 	public ResponseEntity<?> update(@RequestBody Profit profit){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(profit);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(profit));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

@@ -25,8 +25,7 @@ public class ModelMotorController
 	public ResponseEntity<?> save(@RequestBody ModelMotor modelMotor){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(modelMotor);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(modelMotor));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class ModelMotorController
 	public ResponseEntity<?> update(@RequestBody ModelMotor modelMotor){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(modelMotor);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(modelMotor));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

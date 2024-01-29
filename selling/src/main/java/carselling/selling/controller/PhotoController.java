@@ -23,8 +23,7 @@ public class PhotoController
 	public ResponseEntity<?> save(@RequestBody Photo photo){
 		ApiResponse response = new ApiResponse();
 		try{	
-			repository.save(photo);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(photo));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -35,8 +34,7 @@ public class PhotoController
 	public ResponseEntity<?> update(@RequestBody Photo photo){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(photo);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(photo));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

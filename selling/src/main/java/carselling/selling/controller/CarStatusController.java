@@ -25,8 +25,7 @@ public class CarStatusController
 	public ResponseEntity<?> save(@RequestBody CarStatus carStatus){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(carStatus);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(carStatus));
 			return ResponseEntity.ok(response);
 		 }catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class CarStatusController
 	public ResponseEntity<?> update(@RequestBody CarStatus carStatus){
 		 ApiResponse response = new ApiResponse();
 		 try{
-			repository.save(carStatus);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(carStatus));
 			return ResponseEntity.ok(response);
 		 }catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

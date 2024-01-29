@@ -25,8 +25,7 @@ public class TransmissionController
 	public ResponseEntity<?> save(@RequestBody Transmission transmission){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(transmission);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(transmission));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class TransmissionController
 	public ResponseEntity<?> update(@RequestBody Transmission transmission){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(transmission);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(transmission));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

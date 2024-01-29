@@ -25,8 +25,7 @@ public class MotorisationController
 	public ResponseEntity<?> save(@RequestBody Motorisation motorisation){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(motorisation);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(motorisation));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class MotorisationController
 	public ResponseEntity<?> update(@RequestBody Motorisation motorisation){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(motorisation);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(motorisation));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

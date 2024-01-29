@@ -27,8 +27,7 @@ public class SaleController
 	public ResponseEntity<?> save(@RequestBody Sale sale){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(sale);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(sale));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class SaleController
 	public ResponseEntity<?> update(@RequestBody Sale sale){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(sale);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(sale));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

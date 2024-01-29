@@ -21,6 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import carselling.selling.utils.IdGenerator;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 @Entity
 @Table(name = "announcement")
@@ -202,6 +203,12 @@ public class Announcement {
 	public void searchByCategory(String idCategory, List<Predicate> predicates, CriteriaBuilder builder, Root<Announcement> root){
 		if(idCategory != null){
 			predicates.add(builder.equal(root.get("car").get("model").get("category").get("idCategory"), idCategory));
+		}
+	}
+
+	public void searchByOrigin(String idOrigin, List<Predicate> predicates, CriteriaBuilder builder, Root<Announcement> root){
+		if(idOrigin != null){
+			predicates.add(builder.equal(root.get("car").get("model").get("brand").get("origin").get("idOrigin"), idOrigin));
 		}
 	}
 }

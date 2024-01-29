@@ -16,8 +16,9 @@ public class CarDetails {
     String idModel;
     String idBrand;
     String idCategory;
+    String idOrigin;
 
-    public CarDetails(String description, Double min_price, Double max_price, String idLocation, String idTransmission, String idFuelType, String color, String idMotor, Double min_kilometrage, Double max_kilometrage, String idCarStatus, String idGearBox, String idModel, String idBrand, String idCategory) {
+    public CarDetails(String description, Double min_price, Double max_price, String idLocation, String idTransmission, String idFuelType, String color, String idMotor, Double min_kilometrage, Double max_kilometrage, String idCarStatus, String idGearBox, String idModel, String idBrand, String idCategory, String idOrigin) {
         this.description = description;
         this.min_price = min_price;
         this.max_price = max_price;
@@ -33,6 +34,7 @@ public class CarDetails {
         this.idModel = idModel;
         this.idBrand = idBrand;
         this.idCategory = idCategory;
+        this.idOrigin = idOrigin;
     }
 
     public String getDescription() {
@@ -154,4 +156,13 @@ public class CarDetails {
     public void setIdCategory(String idCategory) {
         this.idCategory = idCategory;
     }
+
+    public void setIdOrigin(String idOrigin) {
+        this.idOrigin = idOrigin;
+    }
+
+    public String getIdOrigin(){
+        return idOrigin;
+    }
 }
+

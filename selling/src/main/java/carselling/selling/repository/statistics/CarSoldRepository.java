@@ -13,7 +13,7 @@ import carselling.selling.entity.Car;
 
 public interface CarSoldRepository extends CrudRepository<Car, String>{
 
-    @Query(nativeQuery = true,value = "SELECT * FROM v_most_sold_brand_per_year order by sum desc")
+    @Query(nativeQuery = true,value = "SELECT * FROM v_most_sold_brand_per_year WHERE year is not null  order by sum desc")
     public List<BrandSoldPerYear> getMostSoldBrand();
 
 

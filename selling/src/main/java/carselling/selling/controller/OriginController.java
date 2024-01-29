@@ -23,8 +23,7 @@ public class OriginController
 	public ResponseEntity<?> save(@RequestBody Origin origin){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(origin);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(origin));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -36,8 +35,7 @@ public class OriginController
 	public ResponseEntity<?> update(@RequestBody Origin origin){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(origin);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(origin));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

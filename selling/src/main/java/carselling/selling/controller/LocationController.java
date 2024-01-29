@@ -24,8 +24,7 @@ public class LocationController
 	public ResponseEntity<?> save(@RequestBody Location location){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(location);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(location));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -38,8 +37,7 @@ public class LocationController
 	public ResponseEntity<?> update(@RequestBody Location location){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(location);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(location));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

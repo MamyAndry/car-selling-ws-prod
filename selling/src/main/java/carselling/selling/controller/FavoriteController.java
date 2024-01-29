@@ -23,8 +23,7 @@ public class FavoriteController
 	public ResponseEntity<?> save(@RequestBody Favorite favorite){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(favorite);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(favorite));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -35,8 +34,7 @@ public class FavoriteController
 	public ResponseEntity<?> update(@RequestBody Favorite favorite){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(favorite);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(favorite));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

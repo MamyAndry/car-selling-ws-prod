@@ -25,8 +25,7 @@ public class GearBoxController
 	public ResponseEntity<?> save(@RequestBody GearBox gearBox){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(gearBox);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(gearBox));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class GearBoxController
 	public ResponseEntity<?> update(@RequestBody GearBox gearBox){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(gearBox);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(gearBox));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

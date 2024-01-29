@@ -23,8 +23,7 @@ public class BrandController{
 	public ResponseEntity<?> save(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(brand);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(brand));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -37,8 +36,7 @@ public class BrandController{
 	public ResponseEntity<?> update(@RequestBody Brand brand){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(brand);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(brand));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

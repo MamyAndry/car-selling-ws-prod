@@ -55,7 +55,7 @@ public class LoginService implements UserDetailsService {
         try {
             user = userRepository.findByEmail(user.getEmail());
             if (user == null) {
-                response.addError("email", "This account doesn't exist.");
+                response.addError("error", "This account doesn't exist.");
                 return response;
             }
             if (!user.isAdmin()) {

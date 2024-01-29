@@ -25,8 +25,7 @@ public class CategoryController
 	public ResponseEntity<?> save(@RequestBody Category category){
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(category);
-			response.addData("data", "Inserted successfully");
+			response.addData("data", repository.save(category));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
@@ -39,8 +38,7 @@ public class CategoryController
 	public ResponseEntity<?> update(@RequestBody Category category){    
 		ApiResponse response = new ApiResponse();
 		try{
-			repository.save(category);
-			response.addData("data", "Updated successfully");
+			response.addData("data", repository.save(category));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

@@ -58,10 +58,6 @@ public class Car {
 	@ManyToOne
 	@JoinColumn(name = "id_model")
 	Model model;
-	
-
-
-
 
 	public Car(){}
 
@@ -135,7 +131,7 @@ public class Car {
 		this.user = user;
 	}
 
-	
+
 
 	public ModelGearBox getModelGearBox() {
 		return modelGearBox;

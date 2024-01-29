@@ -4,16 +4,20 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "message")
+@Document(collection = "messages")
 public class Message {
     @Id
     String id;
     String sender;
+    @Field(name = "id_sender")
     String idSender;
     String receiver;
+    @Field(name = "id_receiver")
     String idReceiver;
     String content;
+    @Field(name = "date_time_send")
     Date dateTimeSend;
 
 
@@ -59,7 +63,7 @@ public class Message {
     public void setDateTimeSend(Date dateTimeSend) {
         this.dateTimeSend = dateTimeSend;
     }
-    
+
     public Message() {
     }
 

@@ -42,9 +42,9 @@ public class MessageService {
     }
 
     public List<Message> getMessagesBetweenUsers(String userId1, String userId2) {
-        Query query = new Query(Criteria.where("id_sender").in(Arrays.asList(userId1, userId2))
-            .orOperator(Criteria.where("id_receiver").in(Arrays.asList(userId1, userId2))));
-        query.with(Sort.by(Sort.Order.asc("date_time_send")));
+        Query query = new Query(Criteria.where("idSender").in(Arrays.asList(userId1, userId2))
+            .orOperator(Criteria.where("idReceiver").in(Arrays.asList(userId1, userId2))));
+        query.with(Sort.by(Sort.Order.asc("dateTimeSend")));
         return mongoTemplate.find(query, Message.class);
     }
 }

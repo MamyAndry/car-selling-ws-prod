@@ -8,7 +8,6 @@ import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
 
 
 
@@ -84,6 +83,17 @@ public class AnnouncementController
 		}
 	}
 
+	@GetMapping("historique/{id}")
+	public ResponseEntity<?> historiqueAnnoucement(@PathVariable String id){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findUserHistorique(id));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 	@GetMapping("status/{status}")
 	public ResponseEntity<?> findNotValidated(@PathVariable int status){

@@ -2,7 +2,6 @@ package carselling.selling.controller.advancedResearch;
 
 import carselling.selling.entity.Announcement;
 import carselling.selling.entity.advancedResearch.CarDetails;
-import carselling.selling.response.ApiResponse;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -23,7 +22,6 @@ import java.util.Map;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "advancedReseach")
 public class CarDetailsController {
-    @Autowired
     private EntityManager entityManager;
     public EntityManager getEntityManager() {
         return entityManager;
@@ -34,8 +32,7 @@ public class CarDetailsController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ApiResponse> advancedResearch(@RequestBody CarDetails carDetails){
-        ApiResponse apiResponse = new ApiResponse();
+    public ResponseEntity<Object> advancedResearch(@RequestBody CarDetails carDetails){
         try{
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaQuery<Announcement> query = builder.createQuery(Announcement.class);
@@ -62,12 +59,13 @@ public class CarDetailsController {
 
             List<Announcement> results = entityManager.createQuery(query).getResultList();
 
-            apiResponse.addData("data", results);
-            return ResponseEntity.ok(apiResponse);
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("message", "success");
+            responseMap.put("listAnnonce", results);
+
+            return new ResponseEntity<>(responseMap, HttpStatus.OK);
         } catch (Exception e){
-            e.printStackTrace();
-            apiResponse.addError("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

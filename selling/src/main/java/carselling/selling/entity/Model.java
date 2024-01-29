@@ -1,7 +1,7 @@
 package carselling.selling.entity;
 
 
-import java.util.List;
+import java.util.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 
 
@@ -52,7 +54,21 @@ public class Model {
 	)
 	List<GearBox> gearBoxes;
 
+	@ManyToMany @Getter @Setter
+	@JoinTable(
+		name = "model_motor",
+		joinColumns = @JoinColumn(name = "id_model"),
+		inverseJoinColumns = @JoinColumn(name = "id_motorisation")
+	)
+	List<Motorisation> motorisations = new ArrayList<>();
 
+	@ManyToMany @Getter @Setter
+	@JoinTable(
+		name = "model_fuel_type",
+		joinColumns = @JoinColumn(name = "id_model"),
+		inverseJoinColumns = @JoinColumn(name = "id_fuel_type")
+	)
+	List<FuelType> fuelTypes = new ArrayList<>();;
 
 
 	public Model(){}
@@ -92,5 +108,6 @@ public class Model {
 	public void setGearBoxes(List<GearBox> gearBoxes) {
 		this.gearBoxes = gearBoxes;
 	}
+	
 
 }

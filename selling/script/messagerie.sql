@@ -21,7 +21,7 @@ db.createCollection("messages", {
         },
         id_receiver: {
           bsonType: "string",
-              : "Receiver's ID",
+          description: "Receiver's ID",
         },
         content: {
           bsonType: "string",

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import carselling.selling.entity.messagerie.Message;
 import carselling.selling.repository.messagerie.MessageRepository;
 import carselling.selling.response.ApiResponse;
-import carselling.selling.service.messagerie.MessageService;	
+import carselling.selling.service.messagerie.MessageService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -91,7 +91,7 @@ public class MessageController {
             return ResponseEntity.ok(response);
         }
 	}
-	
+
 
 	@GetMapping("conversation/{id}")
 	public ResponseEntity<?> getConversation(@PathVariable String id) {
@@ -103,6 +103,6 @@ public class MessageController {
 			response.addError("error", e.getCause().getMessage());
             return ResponseEntity.ok(response);
         }	}
-	
+
 
 }

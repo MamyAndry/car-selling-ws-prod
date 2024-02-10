@@ -3,6 +3,7 @@ package carselling.selling.controller;
 
 import carselling.selling.repository.ModelMotorRepository;
 import carselling.selling.response.ApiResponse;
+import carselling.selling.entity.Model;
 import carselling.selling.entity.ModelMotor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,9 +58,9 @@ public class ModelMotorController
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
 			return ResponseEntity.ok(response);
-		}	
+		}
 	}
-	
+
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
 		ApiResponse response = new ApiResponse();
@@ -90,6 +91,18 @@ public class ModelMotorController
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
+
+	@GetMapping("model")
+	public ResponseEntity<?> getList(@RequestBody Model model){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findByModel(model));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

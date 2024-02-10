@@ -61,7 +61,7 @@ public class Car {
 
 	public Car(){}
 
-	
+
 	public Integer getDoorNumber(){
 		return this.doorNumber;
 	}
@@ -100,7 +100,6 @@ public class Car {
 	public void setModelFuelType(ModelFuelType modelFuelType) {
 		this.modelFuelType = modelFuelType;
 	}
-
 
 	public ModelMotor getModelMotor() {
 		return modelMotor;

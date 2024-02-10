@@ -1,6 +1,7 @@
 package carselling.selling.repository;
 
 
+import carselling.selling.entity.Brand;
 import carselling.selling.entity.Model;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package carselling.selling.repository;
 
 
+import carselling.selling.entity.Model;
 import carselling.selling.entity.ModelGearBox;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface ModelGearBoxRepository extends CrudRepository<ModelGearBox, Int
     @Modifying
     @Query("delete from ModelGearBox m where m.model.idModel=:idModel and m.gearBox.idGearBox=:idGearBox ")
     void deleteByModelAndGearBox(@Param("idModel") String idModel, @Param("idGearBox") String idGearBox);
+    List<ModelGearBox> findByModel(Model model);
 }

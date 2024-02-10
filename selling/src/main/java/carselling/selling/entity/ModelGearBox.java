@@ -3,7 +3,9 @@ package carselling.selling.entity;
 
 import org.bson.types.ObjectId;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -21,10 +23,13 @@ public class ModelGearBox {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_model_gear_box")
 	Integer idModelGearBox;
+
 	@ManyToOne
 	@JoinColumn(name = "id_gear_box")
 	GearBox gearBox;
+	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "id_model")
 	Model model;
 

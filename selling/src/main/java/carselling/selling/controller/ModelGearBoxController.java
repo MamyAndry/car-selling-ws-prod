@@ -3,6 +3,7 @@ package carselling.selling.controller;
 
 import carselling.selling.repository.ModelGearBoxRepository;
 import carselling.selling.response.ApiResponse;
+import carselling.selling.entity.Model;
 import carselling.selling.entity.ModelGearBox;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +58,7 @@ public class ModelGearBoxController
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
 			return ResponseEntity.ok(response);
-		}	
+		}
 	}
 
 	@Transactional
@@ -72,9 +73,10 @@ public class ModelGearBoxController
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());
 			return ResponseEntity.ok(response);
-		}	
+		}
 	}
-	
+
+
 	@GetMapping()
 	public ResponseEntity<?> findAll(){
 		ApiResponse response = new ApiResponse();
@@ -105,6 +107,18 @@ public class ModelGearBoxController
 		ApiResponse response = new ApiResponse();
 		try{
 			response.addData("data", repository.paginer(debut, fin));
+			return ResponseEntity.ok(response);
+		}catch(Exception e){
+			response.addError("error", e.getCause().getMessage());
+			return ResponseEntity.ok(response);
+		}
+	}
+
+	@GetMapping("model")
+	public ResponseEntity<?> getList(@RequestBody Model model){
+		ApiResponse response = new ApiResponse();
+		try{
+			response.addData("data", repository.findByModel(model));
 			return ResponseEntity.ok(response);
 		}catch(Exception e){
 			response.addError("error", e.getCause().getMessage());

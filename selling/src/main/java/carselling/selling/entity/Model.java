@@ -6,6 +6,11 @@ import java.util.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import carselling.selling.utils.IdGenerator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +23,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,9 +43,13 @@ public class Model {
 	@Column(name = "id_model")
 	String idModel;
 
+	
 	@ManyToOne
 	@JoinColumn(name = "id_brand")
+	@JsonIgnoreProperties("models")
+	@JsonBackReference
 	Brand brand;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_category")
 	Category category;
@@ -53,6 +63,21 @@ public class Model {
 		inverseJoinColumns = @JoinColumn(name = "id_gear_box")
 	)
 	List<GearBox> gearBoxes;
+
+	@JsonManagedReference
+	@OneToMany
+	@JoinColumn(name = "id_model")
+	List<ModelGearBox> modelGearBoxes;
+
+	@JsonManagedReference
+	@OneToMany
+	@JoinColumn(name = "id_model")
+	List<ModelFuelType> modelFuelTypes;
+
+	@JsonManagedReference
+	@OneToMany
+	@JoinColumn(name = "id_model")
+	List<ModelMotor> modelMotors;
 
 	@ManyToMany @Getter @Setter
 	@JoinTable(
@@ -73,6 +98,12 @@ public class Model {
 
 	public Model(){}
 
+	public List<ModelGearBox> getModelGearBoxes() {
+		return modelGearBoxes;
+	}
+	public void setModelGearBoxes(List<ModelGearBox> modelGearBoxes) {
+		this.modelGearBoxes = modelGearBoxes;
+	}
 	public String getName(){
 		return this.name;
 	}
@@ -89,7 +120,7 @@ public class Model {
 	public Brand getBrand() {
 		return brand;
 	}
-
+	
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}

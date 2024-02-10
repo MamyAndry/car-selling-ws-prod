@@ -1,8 +1,14 @@
 package carselling.selling.entity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import carselling.selling.utils.IdGenerator;
 
@@ -35,6 +42,20 @@ public class Brand {
 	@ManyToOne
 	@JoinColumn(name = "id_origin")
 	Origin origin;
+
+	@OneToMany
+	@JoinColumn(name = "id_brand")
+	@JsonManagedReference
+	List<Model> models;
+
+	public List<Model> getModels() {
+		return models;
+	}
+	public void setModels(List<Model> models) {
+		this.models = models;
+	}
+
+	
 
 
 

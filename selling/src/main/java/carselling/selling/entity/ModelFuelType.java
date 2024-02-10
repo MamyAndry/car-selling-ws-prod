@@ -1,6 +1,8 @@
 package carselling.selling.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class ModelFuelType {
 	@JoinColumn(name = "id_fuel_type")
 	FuelType fuelType;
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "id_model")
 	Model model;
 
